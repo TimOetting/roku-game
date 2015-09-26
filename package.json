@@ -2,10 +2,10 @@
   "name": "roku-game",
   "version": "1.0.0",
   "description": "roku game rules",
-  "main": "/dist/index.js",
+  "main": "/lib/index.js",
   "scripts": {
     "test": "mocha && istanbul report text-summary lcov",
-    "start": "coffee --compile --output dist --watch src"
+    "start": "coffee --compile --output lib --watch src"
   },
   "repository": {
     "type": "git",
