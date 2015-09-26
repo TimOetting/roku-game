@@ -2,7 +2,7 @@
   "name": "roku-game",
   "version": "1.0.0",
   "description": "roku game rules",
-  "main": "/lib/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha && istanbul report text-summary lcov",
     "start": "coffee --compile --output lib --watch src"
