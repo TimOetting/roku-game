@@ -1,0 +1,23 @@
+{
+  "name": "roku-game",
+  "version": "1.0.0",
+  "description": "roku game rules",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avalax/roku-game.git"
+  },
+  "author": "avalax <github@avalax.de> (avalax.de)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avalax/roku-game/issues"
+  },
+  "homepage": "https://github.com/avalax/roku-game#readme",
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3"
+  }
+}
