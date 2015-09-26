@@ -1,5 +1,5 @@
 should = require('chai').should()
-scapegoat = require('../dist/index')
+scapegoat = require('../src/index')
 hello = scapegoat.hello
 
 describe '#hello', ->

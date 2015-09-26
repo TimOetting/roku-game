@@ -4,8 +4,8 @@
   "description": "roku game rules",
   "main": "/dist/index.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register",
-	"start": "coffee --compile --output dist --watch src"
+    "test": "mocha && istanbul report text-summary lcov",
+    "start": "coffee --compile --output dist --watch src"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/avalax/roku-game#readme",
   "devDependencies": {
-	"coffee-script": "^1.10.0",
     "chai": "^3.3.0",
+    "coffee-coverage": "^0.6.3",
+    "coffee-script": "^1.10.0",
+    "istanbul": "^0.3.21",
     "mocha": "^2.3.3"
   }
 }
