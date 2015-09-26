@@ -1,2 +1,2 @@
-exports = module.exports = hello: (name) ->
+module.exports = hello: (name) ->
   'hello ' + name
