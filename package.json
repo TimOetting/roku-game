@@ -2,9 +2,10 @@
   "name": "roku-game",
   "version": "1.0.0",
   "description": "roku game rules",
-  "main": "index.js",
+  "main": "/dist/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "mocha --compilers coffee:coffee-script/register",
+	"start": "coffee --compile --output dist --watch src"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/avalax/roku-game#readme",
   "devDependencies": {
+	"coffee-script": "^1.10.0",
     "chai": "^3.3.0",
     "mocha": "^2.3.3"
   }
