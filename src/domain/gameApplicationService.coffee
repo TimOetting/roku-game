@@ -15,4 +15,7 @@ module.exports = class GameApplicationService
 
   getPossibleActions: (game, x ,y) ->
     position = new Position(x,y)
-    new PossibleTurns(game.board, position)
+    possibleTurns = new PossibleTurns(game.board, position)
+    possibleTurnsDto = {}
+    possibleTurnsDto.moves = possibleTurns.getMoves()
+    possibleTurnsDto.swordAttacks = possibleTurns.getSwordAttacks()
