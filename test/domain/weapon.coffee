@@ -1,5 +1,5 @@
 should = require('chai').should()
-Weapon = require('../src/weapon')
+Weapon = require('../../src/domain/weapon')
 
 describe '#weapon', ->
   it 'test Weapon enums', ->

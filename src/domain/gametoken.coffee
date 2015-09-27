@@ -1,4 +1,4 @@
-Weapon = require('../src/weapon')
+Weapon = require('./weapon')
 
 module.exports = class GameToken
   constructor: (@playerId) ->

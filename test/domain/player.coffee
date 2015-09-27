@@ -1,5 +1,5 @@
 should = require('chai').should()
-Player = require('../src/player')
+Player = require('../../src/domain/player')
 
 describe '#player', ->
   it 'test player assigns on construct', ->

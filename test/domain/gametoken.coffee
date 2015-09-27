@@ -1,6 +1,6 @@
 should = require('chai').should()
-GameToken = require('../src/gametoken')
-Weapon = require('../src/weapon')
+GameToken = require('../../src/domain/gametoken')
+Weapon = require('../../src/domain/weapon')
 
 describe '#gameToken', ->
   it 'test GameToken assigns on construct', ->

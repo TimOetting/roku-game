@@ -1,5 +1,5 @@
 should = require('chai').should()
-Position = require('../src/position')
+Position = require('../../src/domain/position')
 
 describe '#position', ->
   it 'test position assigns on construct', ->

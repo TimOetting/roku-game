@@ -1,7 +1,7 @@
 should = require('chai').should()
-Game = require('../src/game')
-Player = require('../src/player')
-Board = require('../src/board')
+Game = require('../../src/domain/game')
+Player = require('../../src/domain/player')
+Board = require('../../src/domain/board')
 
 describe '#game', ->
   it 'test game assigns on construct', ->
