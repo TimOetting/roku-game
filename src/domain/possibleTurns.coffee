@@ -41,6 +41,8 @@ module.exports = class PossibleTurns
 
     possibilities
 
-  getMoves: () ->
-    possibilities = []
+  getArrowAttacks: () ->
 
+
+  getMoves: () ->
+    (n for n in @neighbours when n not null and @board.tiles[n.x][n.y] == null)
