@@ -48,7 +48,7 @@ module.exports = class PossibleTurns
           possibilities.push(@neighbours[i])
 
     possibilities
-###
+
   getArrowAttacks: () ->
     possibilities = []
 
@@ -62,9 +62,9 @@ module.exports = class PossibleTurns
         when 0
           x = @position.x
           y = @position.y - 1
-          while y >= 0 and not @board.tiles[x][y]?
+          while y >= 0 and not @hasToken(new Position(x, y))?
             y--
-          possibleTargetToken = @board.tiles[x][y]
+          possibleTargetToken = @hasToken(new Position(x, y))
           if y >= 0 and possibleTargetToken?
             if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[3] != Weapon.shield
               possibilities.push(new Position(x, y))
@@ -72,10 +72,10 @@ module.exports = class PossibleTurns
         when 1
           x = @position.x + 1
           y = @position.y - (if x % 2 == 0 then 1 else 0)
-          while x <= maxX and y >= 0 and not @board.tiles[x][y]?
+          while x <= maxX and y >= 0 and not @hasToken(new Position(x, y))?
             x++
             y -= (if x % 2 == 0 then 1 else 0)
-          possibleTargetToken = @board.tiles[x][y]
+          possibleTargetToken = @hasToken(new Position(x, y))
           if x <= maxX and y >= 0 and possibleTargetToken?
             if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[4] != Weapon.shield
               possibilities.push(new Position(x, y))
@@ -83,10 +83,10 @@ module.exports = class PossibleTurns
         when 2
           x = @position.x + 1
           y = @position.y + (if x % 2 == 0 then 0 else 1)
-          while x <= maxX and y <= maxY and not @board.tiles[x][y]?
+          while x <= maxX and y <= maxY and not @hasToken(new Position(x, y))?
             x++
             y += (if x % 2 == 0 then 0 else 1)
-          possibleTargetToken = @board.tiles[x][y]
+          possibleTargetToken = @hasToken(new Position(x, y))
           if x <= maxX and y <= maxY and possibleTargetToken?
             if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[5] != Weapon.shield
               possibilities.push(new Position(x, y))
@@ -94,9 +94,9 @@ module.exports = class PossibleTurns
         when 3
           x = @position.x
           y = @position.y + 1
-          while y <= maxY and not @board.tiles[x][y]?
+          while y <= maxY and not @hasToken(new Position(x, y))?
             y++
-          possibleTargetToken = @board.tiles[x][y]
+          possibleTargetToken = @hasToken(new Position(x, y))
           if y <= maxY and possibleTargetToken?
             if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[0] != Weapon.shield
               possibilities.push(new Position(x, y))
@@ -104,10 +104,10 @@ module.exports = class PossibleTurns
         when 4
           x = @position.x - 1
           y = @position.y + (if x % 2 == 0 then 0 else 1)
-          while x >= 0 and y <= maxY and not @board.tiles[x][y]?
+          while x >= 0 and y <= maxY and not @hasToken(new Position(x, y))?
             x--
             y += (if x % 2 == 0 then 0 else 1)
-          possibleTargetToken = @board.tiles[x][y]
+          possibleTargetToken = @hasToken(new Position(x, y))
           if x >= 0 and y <= maxY and possibleTargetToken?
             if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[1] != Weapon.shield
               possibilities.push(new Position(x, y))
@@ -115,14 +115,12 @@ module.exports = class PossibleTurns
         when 5
           x = @position.x - 1
           y = @position.y - (if x % 2 == 0 then 1 else 0)
-          while x >= 0 and y >= 0 and not @board.tiles[x][y]?
+          while x >= 0 and y >= 0 and not @hasToken(new Position(x, y))?
             x--
             y -= (if x % 2 == 0 then 1 else 0)
-          possibleTargetToken = @board.tiles[x][y]
+          possibleTargetToken = @hasToken(new Position(x, y))
           if x >= 0 and y >= 0 and possibleTargetToken?
             if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[2] != Weapon.shield
               possibilities.push(new Position(x, y))
 
     possibilities
-
-###

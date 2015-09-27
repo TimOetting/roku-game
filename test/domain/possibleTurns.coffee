@@ -46,11 +46,25 @@ describe '#possibleTurns', ->
 
     board.gameTokens.push(new GameToken(1))
     board.gameTokens.push(new GameToken(2))
-    board.gameTokens[0].position = new Position(1,1)
-    board.gameTokens[1].position = new Position(2,1)
+    board.gameTokens[0].position = new Position(1, 1)
+    board.gameTokens[1].position = new Position(2, 1)
 
     position = new Position(1, 1)
 
     turns = new PossibleTurns(board, position).getSwordAttacks()
+
+    turns.length.should.equal(1)
+
+  it 'test getArrowAttacks', ->
+    board = new Board()
+
+    board.gameTokens.push(new GameToken(1))
+    board.gameTokens.push(new GameToken(2))
+    board.gameTokens[0].position = new Position(1, 1)
+    board.gameTokens[1].position = new Position(3, 0)
+
+    position = new Position(1, 1)
+
+    turns = new PossibleTurns(board, position).getArrowAttacks()
 
     turns.length.should.equal(0)
