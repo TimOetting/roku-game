@@ -19,3 +19,4 @@ module.exports = class GameApplicationService
     possibleTurnsDto = {}
     possibleTurnsDto.moves = possibleTurns.getMoves()
     possibleTurnsDto.swordAttacks = possibleTurns.getSwordAttacks()
+    return possibleTurnsDto
