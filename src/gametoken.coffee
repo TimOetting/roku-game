@@ -1,7 +1,7 @@
 Weapon = require('../src/weapon')
 
 module.exports = class GameToken
-  constructor: (@playerId, @position) ->
+  constructor: (@playerId) ->
     @health = 10
     @sides = [
            Weapon.shield
