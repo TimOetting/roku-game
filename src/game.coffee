@@ -7,4 +7,9 @@ module.exports = class Game
     @_placeTokens()
 
   _placeTokens: () ->
-    return
+    for player, i in @players
+      for gameToken, j in player.gameTokens
+        if i == 0
+          @board.tiles[0][j] = gameToken
+        else
+          @board.tiles[5][j] = gameToken
