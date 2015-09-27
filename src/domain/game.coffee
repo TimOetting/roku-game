@@ -6,6 +6,7 @@ module.exports = class Game
       player1,
       player2
     ]
+    @createdAt = new Date
     @_placeTokens()
 
   _placeTokens: () ->
