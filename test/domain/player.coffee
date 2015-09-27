@@ -3,9 +3,8 @@ Player = require('../../src/domain/player')
 
 describe '#player', ->
   it 'test player assigns on construct', ->
-    player = new Player(42,"#ffff00")
+    player = new Player(42)
     player.id.should.equal 42
-    player.color.should.equal "#ffff00"
     player.actionPoints.should.equal 6
     player.gameTokens.length.should.equal 6
     player.gameTokens[0].health.should.equal 10

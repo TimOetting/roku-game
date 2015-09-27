@@ -1,2 +1,5 @@
-module.exports = hello: (name) ->
-  'hello ' + name
+GameApplicationService = require('./domain/gameApplicationService')
+gameApplicationService = new GameApplicationService()
+
+module.exports = createNewGame: () ->
+  gameApplicationService.createNewGame()
