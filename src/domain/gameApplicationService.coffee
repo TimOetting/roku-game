@@ -1,6 +1,8 @@
 Game = require('./game')
 Player = require('./player')
 Board = require('./board')
+PossibleTurns = require('./possibleTurns')
+Position = require('./position')
 
 module.exports = class GameApplicationService
 
@@ -10,3 +12,7 @@ module.exports = class GameApplicationService
     board = new Board();
 
     new Game(board, player1, player2)
+
+  getPossibleActions: (game, x ,y) ->
+    position = new Position(x,y)
+    new PossibleTurns(game.board, position)
