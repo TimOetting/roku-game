@@ -1,5 +1,5 @@
 GameApplicationService = require('./domain/gameApplicationService')
 gameApplicationService = new GameApplicationService()
 
-module.exports = createNewGame: () ->
+module = module.exports = createNewGame: () ->
   gameApplicationService.createNewGame()
