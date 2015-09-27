@@ -22,24 +22,37 @@ module.exports = class PossibleTurns
   isFieldInsideBounds: () ->
     0 <= @position.x <= 6 and 0 <= @position.y <= 5
 
+  hasToken: (position) ->
+    for token in @board.gameTokens
+      if position.x == token.position.x and position.y == token.position.y
+        return token
+    null
+
+  getMoves: () ->
+    possibilities = []
+    for n in @neighbours when n?
+      if not @hasToken(n)?
+        possibilities.push(n)
+    possibilities
+
   getSwordAttacks: () ->
     possibilities = []
 
-    token = @board.tiles[@position.x][@position.y]
+    token = @hasToken(@position)
     swords = (i for i in [0..5] when token.sides[i] == Weapon.sword)
 
     for i in swords when @neighbours[i]?
-      neighbourToken = @board.tiles[@neighbours[i].x][@neighbours[i].y]
+      neighbourToken = @hasToken(@neighbours[i])
       if neighbourToken?
         if token.playerId != neighbourToken.playerId and neighbourToken.sides[(i + 3) % 6] != Weapon.shield
           possibilities.push(@neighbours[i])
 
     possibilities
-
+###
   getArrowAttacks: () ->
     possibilities = []
 
-    token = @board.tiles[@position.x][@position.y]
+    token = @hasToken(@position)
     arrows = (i for i in [0..5] when token.sides[i] == Weapon.arrow)
 
     for i in arrows
@@ -112,9 +125,4 @@ module.exports = class PossibleTurns
 
     possibilities
 
-  getMoves: () ->
-    possibilities = []
-    for n in @neighbours when n?
-      if not @board.tiles[n.x][n.y]?
-        possibilities.push(n)
-    possibilities
+###
