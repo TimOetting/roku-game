@@ -4,5 +4,4 @@ Board = require('../../src/domain/board')
 describe '#board', ->
   it 'test board assigns on construct', ->
     board = new Board()
-    board.tiles.length.should.equal 7
-    board.tiles[0].length.should.equal 6
+    board.gameTokens.length.should.be.empty
