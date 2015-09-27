@@ -13,7 +13,7 @@ module.exports = class Game
     for player, i in @players
       for gameToken, j in player.gameTokens
         if i == 0
-          gameToken.position = new Position(j,0)
+          gameToken.position = new Position(0,j)
         else
-          gameToken.position = new Position(j,5)
+          gameToken.position = new Position(5,j)
         @board.gameTokens.push gameToken
