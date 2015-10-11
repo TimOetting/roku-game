@@ -1,7 +1,7 @@
 should = require('chai').should()
 GameApplicationService = require('../../src/application/gameApplicationService')
 Game = require('../../src/domain/game')
-PossibleTurns = require('../../src/domain/possibleTurns')
+PossibleActions = require('../../src/domain/possibleActions')
 gameApplicationService = new GameApplicationService();
 
 describe '#gameApplicationService', ->
@@ -11,5 +11,5 @@ describe '#gameApplicationService', ->
 
   it 'should return possible moves', ->
     game = gameApplicationService.createNewGame()
-    possibleTurns = gameApplicationService.getPossibleActions(game, 1, 1)
-    possibleTurns.should.instanceOf(PossibleTurns)
+    possibleActions = gameApplicationService.getPossibleActions(game, 1, 1)
+    possibleActions.should.instanceOf(PossibleActions)

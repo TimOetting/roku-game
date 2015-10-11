@@ -1,9 +1,9 @@
 Game = require('../domain/game')
 Player = require('../domain/player')
 Board = require('../domain/board')
-PossibleTurns = require('../domain/possibleTurns')
+PossibleActions = require('../domain/possibleActions')
 Position = require('../domain/position')
-PossibleTurnsApplicationService = require('./possibleTurnsApplicationService')
+PossibleActionsApplicationService = require('./possibleActionsApplicationService')
 
 module.exports = class GameApplicationService
 
@@ -16,8 +16,8 @@ module.exports = class GameApplicationService
 
   getPossibleActions: (game, x ,y) ->
     position = new Position(x,y)
-    possibleTurnsApplicationService = new PossibleTurnsApplicationService(game.board, position)
-    moves = possibleTurnsApplicationService.getMoves()
-    swordAttacks = possibleTurnsApplicationService.getSwordAttacks()
+    possibleActionsApplicationService = new PossibleActionsApplicationService(game.board, position)
+    moves = possibleActionsApplicationService.getMoves()
+    swordAttacks = possibleActionsApplicationService.getSwordAttacks()
 
-    new PossibleTurns(moves, swordAttacks)
+    new PossibleActions(moves, swordAttacks)

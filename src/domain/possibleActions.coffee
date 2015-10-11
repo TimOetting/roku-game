@@ -1,2 +1,2 @@
-module.exports = class PossibleTurns
+module.exports = class PossibleActions
     constructor: (@moves, @swordAttacks) ->

@@ -1,20 +1,20 @@
 should = require('chai').should()
-PossibleTurnsApplicationService = require('../../src/application/possibleTurnsApplicationService')
-PossibleTurns = require('../../src/domain/possibleTurns')
+PossibleActionsApplicationService = require('../../src/application/possibleActionsApplicationService')
+PossibleActions = require('../../src/domain/possibleActions')
 Board = require('../../src/domain/board')
 Position = require('../../src/domain/position')
 GameToken = require('../../src/domain/gametoken')
 
-describe '#possibleTurnsApplicationService', ->
-  it 'test possibleTurnsApplicationService assigns on construct', ->
+describe '#possibleActionsApplicationService', ->
+  it 'test possibleActionsApplicationService assigns on construct', ->
     board = new Board()
     position = new Position(1, 1)
 
-    possibleTurns = new PossibleTurnsApplicationService(board, position)
+    possibleActions = new PossibleActionsApplicationService(board, position)
 
-    possibleTurns.board.should.equal(board)
-    possibleTurns.position.x.should.equal(position.x)
-    possibleTurns.position.y.should.equal(position.y)
+    possibleActions.board.should.equal(board)
+    possibleActions.position.x.should.equal(position.x)
+    possibleActions.position.y.should.equal(position.y)
 
   it 'position with neighbours should have less than six possible moves', ->
     board = new Board()
@@ -25,7 +25,7 @@ describe '#possibleTurnsApplicationService', ->
 
     position = new Position(1, 1)
 
-    turns = new PossibleTurnsApplicationService(board, position).getMoves()
+    turns = new PossibleActionsApplicationService(board, position).getMoves()
 
     turns.length.should.equal(5)
     #turns[0].x.should.equal(1)
@@ -52,7 +52,7 @@ describe '#possibleTurnsApplicationService', ->
 
     position = new Position(1, 1)
 
-    turns = new PossibleTurnsApplicationService(board, position).getSwordAttacks()
+    turns = new PossibleActionsApplicationService(board, position).getSwordAttacks()
 
     turns.length.should.equal(1)
 
@@ -66,6 +66,6 @@ describe '#possibleTurnsApplicationService', ->
 
     position = new Position(1, 1)
 
-    turns = new PossibleTurnsApplicationService(board, position).getArrowAttacks()
+    turns = new PossibleActionsApplicationService(board, position).getArrowAttacks()
 
     turns.length.should.equal(0)

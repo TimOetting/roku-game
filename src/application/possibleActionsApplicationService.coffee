@@ -1,7 +1,7 @@
 Position = require('../domain/position')
 Weapon = require('../domain/weapon')
 
-module.exports = class PossibleTurnsApplicationService
+module.exports = class PossibleActionsApplicationService
   constructor: (@board, @position) ->
     x = @position.x
     y = @position.y
