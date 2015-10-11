@@ -1,5 +1,5 @@
 should = require('chai').should()
-GameApplicationService = require('../../src/domain/gameApplicationService')
+GameApplicationService = require('../../src/application/gameApplicationService')
 Game = require('../../src/domain/game')
 PossibleTurns = require('../../src/domain/possibleTurns')
 gameApplicationService = new GameApplicationService();

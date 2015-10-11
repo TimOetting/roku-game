@@ -1,4 +1,4 @@
-GameApplicationService = require('./domain/gameApplicationService')
+GameApplicationService = require('./application/gameApplicationService')
 gameApplicationService = new GameApplicationService()
 
 module.exports = exports =

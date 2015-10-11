@@ -1,16 +1,16 @@
 should = require('chai').should()
-PossibleTurnsService = require('../../src/domain/possibleTurnsService')
+PossibleTurnsApplicationService = require('../../src/application/possibleTurnsApplicationService')
 PossibleTurns = require('../../src/domain/possibleTurns')
 Board = require('../../src/domain/board')
 Position = require('../../src/domain/position')
 GameToken = require('../../src/domain/gametoken')
 
-describe '#possibleTurnsService', ->
-  it 'test possibleTurnsService assigns on construct', ->
+describe '#possibleTurnsApplicationService', ->
+  it 'test possibleTurnsApplicationService assigns on construct', ->
     board = new Board()
     position = new Position(1, 1)
 
-    possibleTurns = new PossibleTurnsService(board, position)
+    possibleTurns = new PossibleTurnsApplicationService(board, position)
 
     possibleTurns.board.should.equal(board)
     possibleTurns.position.x.should.equal(position.x)
@@ -25,7 +25,7 @@ describe '#possibleTurnsService', ->
 
     position = new Position(1, 1)
 
-    turns = new PossibleTurnsService(board, position).getMoves()
+    turns = new PossibleTurnsApplicationService(board, position).getMoves()
 
     turns.length.should.equal(5)
     #turns[0].x.should.equal(1)
@@ -52,7 +52,7 @@ describe '#possibleTurnsService', ->
 
     position = new Position(1, 1)
 
-    turns = new PossibleTurnsService(board, position).getSwordAttacks()
+    turns = new PossibleTurnsApplicationService(board, position).getSwordAttacks()
 
     turns.length.should.equal(1)
 
@@ -66,6 +66,6 @@ describe '#possibleTurnsService', ->
 
     position = new Position(1, 1)
 
-    turns = new PossibleTurnsService(board, position).getArrowAttacks()
+    turns = new PossibleTurnsApplicationService(board, position).getArrowAttacks()
 
     turns.length.should.equal(0)
