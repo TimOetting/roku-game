@@ -37,8 +37,11 @@ module.exports = class PossibleTurnsService
 
   getSwordAttacks: () ->
     possibilities = []
-
     token = @hasToken(@position)
+
+    unless token?
+      return possibilities
+
     swords = (i for i in [0..5] when token.sides[i] == Weapon.sword)
 
     for i in swords when @neighbours[i]?
@@ -51,8 +54,11 @@ module.exports = class PossibleTurnsService
 
   getArrowAttacks: () ->
     possibilities = []
-
     token = @hasToken(@position)
+
+    unless token?
+      return possibilities
+
     arrows = (i for i in [0..5] when token.sides[i] == Weapon.arrow)
 
     for i in arrows
