@@ -9,4 +9,4 @@ describe '#index', ->
 
   it 'get possible turns from applicationService', ->
     game = index.createNewGame()
-    index.getPossibleActions(game, 1, 1).should.instanceOf(PossibleActions)
+    index.getPossibleActions(game, 0).should.instanceOf(PossibleActions)

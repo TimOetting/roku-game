@@ -1,2 +1,2 @@
 module.exports = class PossibleActions
-    constructor: (@moves, @swordAttacks) ->
+    constructor: (@moves, @swordAttacks, @arrowAttacks) ->

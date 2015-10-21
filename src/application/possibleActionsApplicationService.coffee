@@ -1,8 +1,10 @@
 Position = require('../domain/position')
 Weapon = require('../domain/weapon')
+PossibleActions = require('../domain/possibleActions')
 
 module.exports = class PossibleActionsApplicationService
-  constructor: (@board, @position) ->
+  constructor: (@game, tokenId) ->
+    @position = @game.board.gameTokens[tokenId].position
     x = @position.x
     y = @position.y
 
@@ -23,10 +25,13 @@ module.exports = class PossibleActionsApplicationService
     0 <= @position.x <= 6 and 0 <= @position.y <= 5
 
   hasToken: (position) ->
-    for token in @board.gameTokens
+    for token in @game.board.gameTokens
       if position.x == token.position.x and position.y == token.position.y
         return token
     null
+
+  getPossibleActions: () ->
+    new PossibleActions @getMoves(), @getSwordAttacks(), @getArrowAttacks()
 
   getMoves: () ->
     possibilities = []

@@ -11,12 +11,10 @@ module.exports = class GameApplicationService
     player1 = new Player(1)
     player2 = new Player(2)
     board = new Board();
+    game = new Game(board, player1, player2)
 
-    new Game(board, player1, player2)
-
-  getPossibleActions: (game, x ,y) ->
-    position = new Position(x,y)
-    possibleActionsApplicationService = new PossibleActionsApplicationService(game.board, position)
+  getPossibleActions: (game, tokenId) ->
+    possibleActionsApplicationService = new PossibleActionsApplicationService(game, tokenId)
     moves = possibleActionsApplicationService.getMoves()
     swordAttacks = possibleActionsApplicationService.getSwordAttacks()
 

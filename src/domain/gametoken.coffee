@@ -11,3 +11,7 @@ module.exports = class GameToken
            Weapon.sword
            Weapon.arrow
        ]
+    @possibleActions = 
+      moves: []
+      swordAttacks: []
+      arrowAttacks: []
