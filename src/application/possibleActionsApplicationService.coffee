@@ -47,13 +47,16 @@ module.exports = class PossibleActionsApplicationService
     unless token?
       return possibilities
 
-    swords = (i for i in [0..5] when token.sides[i] == Weapon.sword)
+    swords = (i for i in [0..5] when token.sides[i].weapon == Weapon.sword)
 
     for i in swords when @neighbours[i]?
       neighbourToken = @hasToken(@neighbours[i])
       if neighbourToken?
-        if token.playerId != neighbourToken.playerId and neighbourToken.sides[(i + 3) % 6] != Weapon.shield
-          possibilities.push(neighbourToken.id)
+        if token.playerId != neighbourToken.playerId and neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield and token.sides[i].isReady
+          possibleSwordAttack = 
+            side: i
+            targetId: neighbourToken.id
+          possibilities.push(possibleSwordAttack)
 
     possibilities
 
@@ -64,7 +67,7 @@ module.exports = class PossibleActionsApplicationService
     unless token?
       return possibilities
 
-    arrows = (i for i in [0..5] when token.sides[i] == Weapon.arrow)
+    arrows = (i for i in [0..5] when token.sides[i].weapon == Weapon.arrow)
 
     for i in arrows
       maxX = 6

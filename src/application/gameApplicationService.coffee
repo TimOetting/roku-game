@@ -25,15 +25,43 @@ module.exports = class GameApplicationService
 
   move: (game, tokenId, position) ->
     token = game.board.gameTokens[tokenId]
-    console.log new Position(1,0) in token.possibleActions.moves
-    if containsPosition token.possibleActions.moves, position
+    if @_containsPosition token.possibleActions.moves, position
+      @_performAction(game)
       token.position = position
     return game
 
-containsPosition = (arr, pos) ->
-  i = 0
-  for item in arr
-    if item.x == pos.x and item.y == pos.y
-      return true
-    i++
-  false
+  swordAttack: (game, attackerTokenId, targetTokenId) ->
+    attacker = game.board.gameTokens[attackerTokenId]
+    target = game.board.gameTokens[targetTokenId]
+    if @_isPossibleSwordAttack attacker, target
+      @_performAttack(game, attacker, target)
+    return game
+
+  _performAttack: (game, attacker, target) ->
+    target.health-- 
+    if target.health is 0
+      target.isAlive = false
+    @_performAction(game)
+    game
+
+  _performAction: (game) ->
+    game.gameState.remainingPlayerTurns--
+    if game.gameState.remainingPlayerTurns <= 0
+      game.gameState.activePlayer = 1 - game.gameState.activePlayer
+      game.gameState.remainingPlayerTurns = 6
+
+  _containsPosition: (arr, pos) ->
+    i = 0
+    for item in arr
+      if item.x == pos.x and item.y == pos.y
+        return true
+      i++
+    false
+
+  _isPossibleSwordAttack: (attacker, target) ->
+    for possibleSwordAttack in attacker.possibleActions.swordAttacks
+      for side, sideId in attacker.sides
+        if possibleSwordAttack.targetId is target.id and possibleSwordAttack.side is sideId and side.isReady
+          return true
+    false
+
