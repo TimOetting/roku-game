@@ -33,14 +33,17 @@ module.exports = class GameApplicationService
   swordAttack: (game, attackerTokenId, targetTokenId) ->
     attacker = game.board.gameTokens[attackerTokenId]
     target = game.board.gameTokens[targetTokenId]
-    if @_isPossibleSwordAttack attacker, target
-      @_performAttack(game, attacker, target)
+    swordAttack = @_getPossibleSwordAttack attacker, target
+    if swordAttack?
+      @_performAttack(game, attacker, swordAttack)
     return game
 
-  _performAttack: (game, attacker, target) ->
+  _performAttack: (game, attacker, attack) ->
+    target = game.board.gameTokens[attack.targetId]
     target.health-- 
     if target.health is 0
       target.isAlive = false
+    attacker.sides[attack.side].isReady = false
     @_performAction(game)
     game
 
@@ -58,10 +61,9 @@ module.exports = class GameApplicationService
       i++
     false
 
-  _isPossibleSwordAttack: (attacker, target) ->
+  _getPossibleSwordAttack: (attacker, target) ->
     for possibleSwordAttack in attacker.possibleActions.swordAttacks
       for side, sideId in attacker.sides
         if possibleSwordAttack.targetId is target.id and possibleSwordAttack.side is sideId and side.isReady
-          return true
-    false
+          return possibleSwordAttack
 

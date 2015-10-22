@@ -39,6 +39,18 @@ describe '#gameApplicationService', ->
     game = gameApplicationService.swordAttack game, 0, 5
     game.board.gameTokens[5].health.should.be.equal 9
 
+  it 'should not be able to perform sword attack twice in the same turn', ->
+    game = gameApplicationService.createNewGame()
+    game.board.gameTokens[0].position = new Position 0, 1 
+    game.board.gameTokens[0].possibleActions.swordAttacks = [
+        side: 1
+        targetId: 5
+      ]
+    game.board.gameTokens[5].position = new Position 0, 2 
+    game = gameApplicationService.swordAttack game, 0, 5
+    game = gameApplicationService.swordAttack game, 0, 5
+    game.board.gameTokens[5].health.should.be.equal 9
+
   it 'should not perform sword attack if it is not a possible action', ->
     game = gameApplicationService.createNewGame()
     game.board.gameTokens[0].position = new Position 0, 1 
