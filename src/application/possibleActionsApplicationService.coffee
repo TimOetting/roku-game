@@ -53,7 +53,7 @@ module.exports = class PossibleActionsApplicationService
       neighbourToken = @hasToken(@neighbours[i])
       if neighbourToken?
         if token.playerId != neighbourToken.playerId and neighbourToken.sides[(i + 3) % 6] != Weapon.shield
-          possibilities.push(@neighbours[i])
+          possibilities.push(neighbourToken.id)
 
     possibilities
 
