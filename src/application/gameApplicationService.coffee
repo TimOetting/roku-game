@@ -12,10 +12,28 @@ module.exports = class GameApplicationService
     player2 = new Player(2)
     board = new Board();
     game = new Game(board, player1, player2)
+    for gameToken in game.board.gameTokens
+      gameToken.possibleActions = @getPossibleActions(game, gameToken.id)
+    return game
 
   getPossibleActions: (game, tokenId) ->
     possibleActionsApplicationService = new PossibleActionsApplicationService(game, tokenId)
     moves = possibleActionsApplicationService.getMoves()
     swordAttacks = possibleActionsApplicationService.getSwordAttacks()
+    arrowAttacks = possibleActionsApplicationService.getSwordAttacks()
+    new PossibleActions(moves, swordAttacks, arrowAttacks)
 
-    new PossibleActions(moves, swordAttacks)
+  move: (game, tokenId, position) ->
+    token = game.board.gameTokens[tokenId]
+    console.log new Position(1,0) in token.possibleActions.moves
+    if containsPosition token.possibleActions.moves, position
+      token.position = position
+    return game
+
+containsPosition = (arr, pos) ->
+  i = 0
+  for item in arr
+    if item.x == pos.x and item.y == pos.y
+      return true
+    i++
+  false
