@@ -61,3 +61,14 @@ describe '#gameApplicationService', ->
     game.board.gameTokens[5].position = new Position 0, 2 
     game = gameApplicationService.swordAttack game, 0, 5
     game.board.gameTokens[5].health.should.be.equal 10
+
+  it 'should switch active player after 6 actions', ->
+    game = gameApplicationService.createNewGame()
+    game = gameApplicationService._performAction game
+    game = gameApplicationService._performAction game
+    game = gameApplicationService._performAction game
+    game = gameApplicationService._performAction game
+    game = gameApplicationService._performAction game
+    game.gameState.activePlayer.should.be.equal 0
+    game = gameApplicationService._performAction game
+    game.gameState.activePlayer.should.be.equal 1

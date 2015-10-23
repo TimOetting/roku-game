@@ -51,9 +51,10 @@ module.exports = class GameApplicationService
     game.gameState.remainingPlayerTurns--
     if game.gameState.remainingPlayerTurns <= 0
       for gameToken in game.board.gameTokens when gameToken.playerId is game.gameState.activePlayer
-        side.isReady = true for side in gameToken.side
+        side.isReady = true for side in gameToken.sides
       game.gameState.activePlayer = 1 - game.gameState.activePlayer
       game.gameState.remainingPlayerTurns = 6
+    game
 
   _containsPosition: (arr, pos) ->
     i = 0
