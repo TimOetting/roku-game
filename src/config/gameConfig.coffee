@@ -1,0 +1,4 @@
+module.exports = 
+  ACTIONS_PER_TURN: 6
+  ARROW_MAX_DISTANCE: 6
+  ARROW_MIN_DISTANCE: 2
