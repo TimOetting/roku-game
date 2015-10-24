@@ -1,6 +1,7 @@
 Position = require('../domain/position')
 Weapon = require('../domain/weapon')
 PossibleActions = require('../domain/possibleActions')
+Config = require('../config/gameConfig')
 
 module.exports = class PossibleActionsApplicationService
   constructor: (@game, tokenId) ->
@@ -24,7 +25,7 @@ module.exports = class PossibleActionsApplicationService
   isFieldInsideBounds: () ->
     0 <= @position.x <= 6 and 0 <= @position.y <= 5
 
-  hasToken: (position) ->
+  getToken: (position) ->
     for token in @game.board.gameTokens
       if position.x == token.position.x and position.y == token.position.y
         return token
@@ -36,13 +37,13 @@ module.exports = class PossibleActionsApplicationService
   getMoves: () ->
     possibilities = []
     for n in @neighbours when n?
-      if not @hasToken(n)?
+      if not @getToken(n)?
         possibilities.push(n)
     possibilities
 
   getSwordAttacks: () ->
     possibilities = []
-    token = @hasToken(@position)
+    token = @getToken(@position)
 
     unless token?
       return possibilities
@@ -50,91 +51,60 @@ module.exports = class PossibleActionsApplicationService
     swords = (i for i in [0..5] when token.sides[i].weapon == Weapon.sword)
 
     for i in swords when @neighbours[i]?
-      neighbourToken = @hasToken(@neighbours[i])
+      neighbourToken = @getToken(@neighbours[i])
       if neighbourToken?
-        if token.playerId != neighbourToken.playerId and neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield and token.sides[i].isReady
-          possibleSwordAttack = 
+        if token.playerId != neighbourToken.playerId and 
+        neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield and 
+        token.sides[i].isReady
+          possibilities.push
             side: i
             targetId: neighbourToken.id
-          possibilities.push(possibleSwordAttack)
 
     possibilities
 
   getArrowAttacks: () ->
     possibilities = []
-    token = @hasToken(@position)
-
+    token = @getToken(@position)
+    console.log token
     unless token?
       return possibilities
 
     arrows = (i for i in [0..5] when token.sides[i].weapon == Weapon.arrow)
 
     for i in arrows
-      maxX = 6
-      maxY = 5
-      switch i
-        when 0
-          x = @position.x
-          y = @position.y - 1
-          while y >= 0 and not @hasToken(new Position(x, y))?
-            y--
-          possibleTargetToken = @hasToken(new Position(x, y))
-          if y >= 0 and possibleTargetToken?
-            if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[3] != Weapon.shield
-              possibilities.push(new Position(x, y))
-
-        when 1
-          x = @position.x + 1
-          y = @position.y - (if x % 2 == 0 then 1 else 0)
-          while x <= maxX and y >= 0 and not @hasToken(new Position(x, y))?
-            x++
-            y -= (if x % 2 == 0 then 1 else 0)
-          possibleTargetToken = @hasToken(new Position(x, y))
-          if x <= maxX and y >= 0 and possibleTargetToken?
-            if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[4] != Weapon.shield
-              possibilities.push(new Position(x, y))
-
-        when 2
-          x = @position.x + 1
-          y = @position.y + (if x % 2 == 0 then 0 else 1)
-          while x <= maxX and y <= maxY and not @hasToken(new Position(x, y))?
-            x++
-            y += (if x % 2 == 0 then 0 else 1)
-          possibleTargetToken = @hasToken(new Position(x, y))
-          if x <= maxX and y <= maxY and possibleTargetToken?
-            if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[5] != Weapon.shield
-              possibilities.push(new Position(x, y))
-
-        when 3
-          x = @position.x
-          y = @position.y + 1
-          while y <= maxY and not @hasToken(new Position(x, y))?
-            y++
-          possibleTargetToken = @hasToken(new Position(x, y))
-          if y <= maxY and possibleTargetToken?
-            if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[0] != Weapon.shield
-              possibilities.push(new Position(x, y))
-
-        when 4
-          x = @position.x - 1
-          y = @position.y + (if x % 2 == 0 then 0 else 1)
-          while x >= 0 and y <= maxY and not @hasToken(new Position(x, y))?
-            x--
-            y += (if x % 2 == 0 then 0 else 1)
-          possibleTargetToken = @hasToken(new Position(x, y))
-          if x >= 0 and y <= maxY and possibleTargetToken?
-            if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[1] != Weapon.shield
-              possibilities.push(new Position(x, y))
-
-        when 5
-          x = @position.x - 1
-          y = @position.y - (if x % 2 == 0 then 1 else 0)
-          while x >= 0 and y >= 0 and not @hasToken(new Position(x, y))?
-            x--
-            y -= (if x % 2 == 0 then 1 else 0)
-          possibleTargetToken = @hasToken(new Position(x, y))
-          if x >= 0 and y >= 0 and possibleTargetToken?
-            if token.playerId != possibleTargetToken.playerId and possibleTargetToken.sides[2] != Weapon.shield
-              possibilities.push(new Position(x, y))
-
+      distance = 0
+      console.log '>>>>>>>>>>>>>'
+      for distance in [1..Config.ARROW_MAX_DISTANCE]
+        neighbourToken = @getToken(@_getDistantNeighbour(@position, distance, i))
+        if neighbourToken? and 
+        neighbourToken.playerId isnt token.playerId and
+        neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield
+          console.log 'dingo'
+          possibilities.push
+            side: i
+            targetId: neighbourToken.id
+          break
     possibilities
+
+  _getDistantNeighbour: (pos, distance, direction) ->
+    directionVector = switch
+      when direction is 0 then {x: 0, y: -1}
+      when direction is 1 then {x: 1, y: -1}
+      when direction is 2 then {x: 1, y: 1}
+      when direction is 3 then {x: 0, y: 1}
+      when direction is 4 then {x: -1, y: 1}
+      when direction is 5 then {x: -1, y: -1}
+
+    outPos = 
+      x: pos.x
+      y: pos.y
+    if directionVector.x != 0
+      if pos.x % 2 == 0
+        outPos.y += Math.floor (directionVector.y * distance) / 2
+      else
+        outPos.y += Math.ceil (directionVector.y * distance) / 2
+    else
+      outPos.y += directionVector.y * distance
+    outPos.x += directionVector.x * distance
+    outPos
+
