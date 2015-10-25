@@ -15,7 +15,7 @@ module.exports = class Game
   _placeTokens: () ->
     for player, i in @players
       for gameToken, j in player.gameTokens
-        gameToken.id = (i * j) + j
+        gameToken.id = (i * (player.gameTokens.length)) + j
         gameToken.playerId = i
         if i == 0
           gameToken.position = new Position(0,j)

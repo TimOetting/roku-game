@@ -30,12 +30,14 @@ module.exports = class GameApplicationService
       token.position = position
     return game
 
-  swordAttack: (game, attackerTokenId, targetTokenId) ->
+  #TODO combine sword and arrow attack to one attack method
+
+  attack: (game, attackerTokenId, targetTokenId) ->
     attacker = game.board.gameTokens[attackerTokenId]
     target = game.board.gameTokens[targetTokenId]
-    swordAttack = @_getPossibleSwordAttack attacker, target
-    if swordAttack?
-      @_performAttack(game, attacker, swordAttack)
+    attack = @_getPossibleAttack attacker, target
+    if attack?
+      @_performAttack(game, attacker, attack)
     return game
 
   _performAttack: (game, attacker, attack) ->
@@ -64,9 +66,10 @@ module.exports = class GameApplicationService
       i++
     false
 
-  _getPossibleSwordAttack: (attacker, target) ->
-    for possibleSwordAttack in attacker.possibleActions.swordAttacks
+  _getPossibleAttack: (attacker, target) ->
+    possibleAttacks = attacker.possibleActions.swordAttacks.concat attacker.possibleActions.arrowAttacks
+    for possibleAttack in possibleAttacks
       for side, sideId in attacker.sides
-        if possibleSwordAttack.targetId is target.id and possibleSwordAttack.side is sideId and side.isReady
-          return possibleSwordAttack
+        if possibleAttack.targetId is target.id and possibleAttack.side is sideId and side.isReady
+          return possibleAttack
 

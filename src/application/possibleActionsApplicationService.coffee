@@ -48,14 +48,13 @@ module.exports = class PossibleActionsApplicationService
     unless token?
       return possibilities
 
-    swords = (i for i in [0..5] when token.sides[i].weapon == Weapon.sword)
+    swords = (i for i in [0..5] when token.sides[i].weapon == Weapon.sword and token.sides[i].isReady)
 
     for i in swords when @neighbours[i]?
       neighbourToken = @getToken(@neighbours[i])
       if neighbourToken?
         if token.playerId != neighbourToken.playerId and 
-        neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield and 
-        token.sides[i].isReady
+        neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield
           possibilities.push
             side: i
             targetId: neighbourToken.id
@@ -65,21 +64,18 @@ module.exports = class PossibleActionsApplicationService
   getArrowAttacks: () ->
     possibilities = []
     token = @getToken(@position)
-    console.log token
     unless token?
       return possibilities
 
-    arrows = (i for i in [0..5] when token.sides[i].weapon == Weapon.arrow)
+    arrows = (i for i in [0..5] when token.sides[i].weapon == Weapon.arrow and token.sides[i].isReady)
 
     for i in arrows
       distance = 0
-      console.log '>>>>>>>>>>>>>'
       for distance in [1..Config.ARROW_MAX_DISTANCE]
         neighbourToken = @getToken(@_getDistantNeighbour(@position, distance, i))
         if neighbourToken? and 
         neighbourToken.playerId isnt token.playerId and
         neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield
-          console.log 'dingo'
           possibilities.push
             side: i
             targetId: neighbourToken.id

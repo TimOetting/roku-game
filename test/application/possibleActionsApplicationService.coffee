@@ -15,8 +15,6 @@ describe '#possibleActionsApplicationService', ->
     possibleActions = new PossibleActionsApplicationService(game, 0)
 
     possibleActions.game.should.equal(game)
-    # possibleActions.position.x.should.equal(position.x)
-    # possibleActions.position.y.should.equal(position.y)
 
   it 'position with neighbours should have less than six possible moves', ->
     game = getTestGameSetup()
@@ -24,18 +22,6 @@ describe '#possibleActionsApplicationService', ->
     turns = new PossibleActionsApplicationService(game, 0).getMoves()
 
     turns.length.should.equal(5)
-    #turns[0].x.should.equal(1)
-    #turns[0].y.should.equal(0)
-    #turns[1].x.should.equal(2)
-    #turns[1].y.should.equal(1)
-    #turns[2].x.should.equal(2)
-    #turns[2].y.should.equal(2)
-    #turns[3].x.should.equal(1)
-    #turns[3].y.should.equal(2)
-    #turns[4].x.should.equal(0)
-    #turns[4].y.should.equal(2)
-    #turns[5].x.should.equal(0)
-    #turns[5].y.should.equal(1)
 
   it 'test getSwordAttacks', ->
     game = getTestGameSetup()
