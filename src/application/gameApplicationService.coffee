@@ -56,6 +56,8 @@ module.exports = class GameApplicationService
         side.isReady = true for side in gameToken.sides
       game.gameState.activePlayer = 1 - game.gameState.activePlayer
       game.gameState.remainingPlayerTurns = 6
+    for gameToken in game.board.gameTokens
+      gameToken.possibleActions = @getPossibleActions(game, gameToken.id)
     game
 
   _containsPosition: (arr, pos) ->
