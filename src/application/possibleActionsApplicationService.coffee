@@ -5,7 +5,8 @@ Config = require('../config/gameConfig')
 
 module.exports = class PossibleActionsApplicationService
   constructor: (@game, tokenId) ->
-    @position = @game.board.gameTokens[tokenId].position
+    @token = @game.board.gameTokens[tokenId]
+    @position = @token.position
     x = @position.x
     y = @position.y
 
@@ -32,54 +33,50 @@ module.exports = class PossibleActionsApplicationService
     null
 
   getPossibleActions: () ->
-    new PossibleActions @getMoves(), @getSwordAttacks(), @getArrowAttacks()
+    if @token.playerId is @game.gameState.activePlayer  
+      new PossibleActions @getMoves(), @getSwordAttacks(), @getArrowAttacks()
+    else
+      new PossibleActions [], [], []
 
   getMoves: () ->
     possibilities = []
-    for n in @neighbours when n?
-      if not @getToken(n)?
-        possibilities.push(n)
+    if @token.playerId is @game.gameState.activePlayer
+      for n in @neighbours when n?
+        if not @getToken(n)?
+          possibilities.push(n)
     possibilities
 
   getSwordAttacks: () ->
     possibilities = []
-    token = @getToken(@position)
 
-    unless token?
-      return possibilities
-
-    swords = (i for i in [0..5] when token.sides[i].weapon == Weapon.sword and token.sides[i].isReady)
-
-    for i in swords when @neighbours[i]?
-      neighbourToken = @getToken(@neighbours[i])
-      if neighbourToken?
-        if token.playerId != neighbourToken.playerId and 
-        neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield
-          possibilities.push
-            side: i
-            targetId: neighbourToken.id
+    if @token.playerId is @game.gameState.activePlayer
+      swords = (i for i in [0..5] when @token.sides[i].weapon == Weapon.sword and @token.sides[i].isReady)
+      for i in swords when @neighbours[i]?
+        neighbourToken = @getToken(@neighbours[i])
+        if neighbourToken?
+          if @token.playerId != neighbourToken.playerId and 
+          neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield
+            possibilities.push
+              side: i
+              targetId: neighbourToken.id
 
     possibilities
 
   getArrowAttacks: () ->
     possibilities = []
-    token = @getToken(@position)
-    unless token?
-      return possibilities
-
-    arrows = (i for i in [0..5] when token.sides[i].weapon == Weapon.arrow and token.sides[i].isReady)
-
-    for i in arrows
-      distance = 0
-      for distance in [1..Config.ARROW_MAX_DISTANCE]
-        neighbourToken = @getToken(@_getDistantNeighbour(@position, distance, i))
-        if neighbourToken? and 
-        neighbourToken.playerId isnt token.playerId and
-        neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield
-          possibilities.push
-            side: i
-            targetId: neighbourToken.id
-          break
+    if @token.playerId is @game.gameState.activePlayer
+      arrows = (i for i in [0..5] when @token.sides[i].weapon == Weapon.arrow and @token.sides[i].isReady)
+      for i in arrows
+        distance = 0
+        for distance in [1..Config.ARROW_MAX_DISTANCE]
+          neighbourToken = @getToken(@_getDistantNeighbour(@position, distance, i))
+          if neighbourToken? and 
+          neighbourToken.playerId isnt @token.playerId and
+          neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield
+            possibilities.push
+              side: i
+              targetId: neighbourToken.id
+            break
     possibilities
 
   _getDistantNeighbour: (pos, distance, direction) ->

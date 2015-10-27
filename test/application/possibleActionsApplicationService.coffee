@@ -28,8 +28,10 @@ describe '#possibleActionsApplicationService', ->
     game.board.gameTokens[0].position = new Position(1, 1)
     game.board.gameTokens[6].position = new Position(2, 1)
     possibleSwordAttacks = new PossibleActionsApplicationService(game, 0).getSwordAttacks()
-
     possibleSwordAttacks.length.should.equal(1)
+    possibleSwordAttacks = new PossibleActionsApplicationService(game, 6).getSwordAttacks()
+    possibleSwordAttacks.length.should.equal(0)
+
 
   it 'test getArrowAttacks', ->
     game = getTestGameSetup()
