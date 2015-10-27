@@ -26,8 +26,8 @@ module.exports = class GameApplicationService
   move: (game, tokenId, position) ->
     token = game.board.gameTokens[tokenId]
     if @_containsPosition token.possibleActions.moves, position
-      @_performAction(game)
       token.position = position
+      @_performAction(game)
     return game
 
   #TODO combine sword and arrow attack to one attack method
