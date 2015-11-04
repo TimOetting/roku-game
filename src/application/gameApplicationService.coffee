@@ -20,7 +20,7 @@ module.exports = class GameApplicationService
     possibleActionsApplicationService = new PossibleActionsApplicationService(game, tokenId)
     moves = possibleActionsApplicationService.getMoves()
     swordAttacks = possibleActionsApplicationService.getSwordAttacks()
-    arrowAttacks = possibleActionsApplicationService.getSwordAttacks()
+    arrowAttacks = possibleActionsApplicationService.getArrowAttacks()
     new PossibleActions(moves, swordAttacks, arrowAttacks)
 
   move: (game, tokenId, position) ->
