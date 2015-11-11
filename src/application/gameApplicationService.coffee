@@ -23,6 +23,15 @@ module.exports = class GameApplicationService
     arrowAttacks = possibleActionsApplicationService.getArrowAttacks()
     new PossibleActions(moves, swordAttacks, arrowAttacks)
 
+  rotate: (game, tokenId, steps) ->
+    token = game.board.gameTokens[tokenId]
+    for i in [0...Math.abs(steps)]
+      console.log 'ding ', steps
+      token.sides.unshift(token.sides.pop()) if steps > 0
+      token.sides.push(token.sides.shift()) if steps < 0
+    @_performAction(game) 
+    return game
+
   move: (game, tokenId, position) ->
     token = game.board.gameTokens[tokenId]
     if @_containsPosition token.possibleActions.moves, position
@@ -30,23 +39,17 @@ module.exports = class GameApplicationService
       @_performAction(game)
     return game
 
-  #TODO combine sword and arrow attack to one attack method
-
   attack: (game, attackerTokenId, targetTokenId) ->
     attacker = game.board.gameTokens[attackerTokenId]
     target = game.board.gameTokens[targetTokenId]
     attack = @_getPossibleAttack attacker, target
     if attack?
-      @_performAttack(game, attacker, attack)
-    return game
-
-  _performAttack: (game, attacker, attack) ->
-    target = game.board.gameTokens[attack.targetId]
-    target.health-- 
-    if target.health is 0
-      target.isAlive = false
-    attacker.sides[attack.side].isReady = false
-    @_performAction(game)
+      target = game.board.gameTokens[attack.targetId]
+      target.health-- 
+      if target.health is 0
+        target.isAlive = false
+      attacker.sides[attack.side].isReady = false
+      @_performAction(game)
     game
 
   _performAction: (game) ->

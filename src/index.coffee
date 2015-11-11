@@ -7,6 +7,9 @@ module.exports = exports =
 
   getPossibleActions: (game, x , y) ->
     gameApplicationService.getPossibleActions game, x, y
+  
+  rotate: (game, tokenId, steps) ->
+    gameApplicationService.rotate game, tokenId, steps
 
   move: (game, tokenId, position) ->
     gameApplicationService.move game, tokenId, position

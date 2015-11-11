@@ -1,6 +1,7 @@
 should = require('chai').should()
 index = require('../src/index')
 Game = require('../src/domain/game')
+Weapon = require('../src/domain/weapon')
 Position = require('../src/domain/position')
 PossibleActions = require('../src/domain/possibleActions')
 GameApplicationService = require('../src/application/gameApplicationService')
@@ -13,6 +14,28 @@ describe '#index', ->
   it 'get possible turns from applicationService', ->
     game = index.createNewGame()
     index.getPossibleActions(game, 0).should.instanceOf(PossibleActions)
+
+  it 'perform rotation', ->
+    game = index.createNewGame()
+    game.board.gameTokens[0].sides = [
+        {isReady: true, weapon: Weapon.shield}
+        {isReady: true, weapon: Weapon.sword}
+        {isReady: true, weapon: Weapon.arrow}
+        {isReady: true, weapon: Weapon.shield}
+        {isReady: true, weapon: Weapon.sword}
+        {isReady: true, weapon: Weapon.arrow}
+      ]
+    console.log game.board.gameTokens[0].sides
+    index.rotate(game, 0, 1)
+    console.log game.board.gameTokens[0].sides
+    game.board.gameTokens[0].sides.should.be.eql [
+        {isReady: true, weapon: Weapon.arrow}
+        {isReady: true, weapon: Weapon.shield}
+        {isReady: true, weapon: Weapon.sword}
+        {isReady: true, weapon: Weapon.arrow}
+        {isReady: true, weapon: Weapon.shield}
+        {isReady: true, weapon: Weapon.sword}
+      ]
 
   it 'perform move', ->
     game = index.createNewGame()
