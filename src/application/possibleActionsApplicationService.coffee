@@ -68,7 +68,7 @@ module.exports = class PossibleActionsApplicationService
       arrows = (i for i in [0..5] when @token.sides[i].weapon == Weapon.arrow and @token.sides[i].isReady)
       for i in arrows
         distance = 0
-        for distance in [1..Config.ARROW_MAX_DISTANCE]
+        for distance in [2..Config.ARROW_MAX_DISTANCE]
           neighbourToken = @getToken(@_getDistantNeighbour(@position, distance, i))
           if neighbourToken? and 
           neighbourToken.playerId isnt @token.playerId and

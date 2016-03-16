@@ -50,9 +50,13 @@ describe '#possibleActionsApplicationService', ->
     game.board.gameTokens[11].position = new Position(0, 1)
     possibleArrowAttacks = new PossibleActionsApplicationService(game, 0).getArrowAttacks()
     possibleArrowAttacks.length.should.equal(6)
+    # Test too large distance
     game.board.gameTokens[8].position = new Position(2, 9)
     possibleArrowAttacks = new PossibleActionsApplicationService(game, 0).getArrowAttacks()
-    # Test too large distance
+    possibleArrowAttacks.length.should.equal(5)
+    # Test too short distance
+    game.board.gameTokens[8].position = new Position(2, 3)
+    possibleArrowAttacks = new PossibleActionsApplicationService(game, 0).getArrowAttacks()
     possibleArrowAttacks.length.should.equal(5)
     # Test blocked attacks
     for token in game.board.gameTokens
