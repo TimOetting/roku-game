@@ -13,7 +13,8 @@ describe '#gameToken', ->
     gameToken.sides[0].weapon.should.equal Weapon.shield
     gameToken.sides[1].weapon.should.equal Weapon.sword
     gameToken.sides[2].weapon.should.equal Weapon.arrow
-    gameToken.sides[3].weapon.should.equal Weapon.shield
+    # gameToken.sides[3].weapon.should.equal null
+    (gameToken.sides[3].weapon == null).should.be.true
     gameToken.sides[4].weapon.should.equal Weapon.sword
     gameToken.sides[5].weapon.should.equal Weapon.arrow
 

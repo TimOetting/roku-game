@@ -50,7 +50,7 @@ module.exports = class PossibleActionsApplicationService
     possibilities = []
 
     if @token.playerId is @game.gameState.activePlayer
-      swords = (i for i in [0..5] when @token.sides[i].weapon == Weapon.sword and @token.sides[i].isReady)
+      swords = (i for i in [0..5] when @token.sides[i].weapon is Weapon.sword and @token.sides[i].isReady)
       for i in swords when @neighbours[i]?
         neighbourToken = @getToken(@neighbours[i])
         if neighbourToken?
@@ -59,7 +59,6 @@ module.exports = class PossibleActionsApplicationService
             possibilities.push
               side: i
               targetId: neighbourToken.id
-
     possibilities
 
   getArrowAttacks: () ->
@@ -68,8 +67,8 @@ module.exports = class PossibleActionsApplicationService
       arrows = (i for i in [0..5] when @token.sides[i].weapon == Weapon.arrow and @token.sides[i].isReady)
       for i in arrows
         distance = 0
-        for distance in [2..Config.ARROW_MAX_DISTANCE]
-          neighbourToken = @getToken(@_getDistantNeighbour(@position, distance, i))
+        for distance in [Config.ARROW_MIN_DISTANCE..Config.ARROW_MAX_DISTANCE]
+          neighbourToken = @getToken(@_getDistantField(@position, distance, i))
           if neighbourToken? and 
           neighbourToken.playerId isnt @token.playerId and
           neighbourToken.sides[(i + 3) % 6].weapon != Weapon.shield
@@ -79,7 +78,7 @@ module.exports = class PossibleActionsApplicationService
             break
     possibilities
 
-  _getDistantNeighbour: (pos, distance, direction) ->
+  _getDistantField: (pos, distance, direction) ->
     directionVector = switch
       when direction is 0 then {x: 0, y: -1}
       when direction is 1 then {x: 1, y: -1}

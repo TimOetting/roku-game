@@ -10,7 +10,7 @@ module.exports = class GameApplicationService
   createNewGame: () ->
     player1 = new Player(1)
     player2 = new Player(2)
-    board = new Board();
+    board = new Board()
     game = new Game(board, player1, player2)
     for gameToken in game.board.gameTokens
       gameToken.possibleActions = @getPossibleActions(game, gameToken.id)

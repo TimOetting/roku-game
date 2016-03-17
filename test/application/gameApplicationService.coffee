@@ -7,17 +7,17 @@ PossibleActions = require('../../src/domain/possibleActions')
 gameApplicationService = new GameApplicationService();
 
 describe '#gameApplicationService', ->
+  game = gameApplicationService.createNewGame()
+  # before (done) ->
+  #   done()
   it 'should create new game', ->
-    game = gameApplicationService.createNewGame()
     game.should.instanceOf(Game)
 
   it 'should return possible actions', ->
-    game = gameApplicationService.createNewGame()
     possibleActions = gameApplicationService.getPossibleActions(game, 0)
     possibleActions.should.instanceOf(PossibleActions)
 
   it 'should perform rotation', ->
-    game = gameApplicationService.createNewGame()
     game.board.gameTokens[0].sides = [
         {isReady: true, weapon: Weapon.shield}
         {isReady: true, weapon: Weapon.sword}
@@ -43,6 +43,15 @@ describe '#gameApplicationService', ->
         {isReady: true, weapon: Weapon.arrow}
         {isReady: true, weapon: Weapon.shield}
         {isReady: true, weapon: Weapon.sword}
+      ]
+    gameApplicationService.rotate game, 0, -1
+    game.board.gameTokens[0].sides.should.be.eql [
+        {isReady: true, weapon: Weapon.shield}
+        {isReady: true, weapon: Weapon.sword}
+        {isReady: true, weapon: Weapon.arrow}
+        {isReady: true, weapon: Weapon.shield}
+        {isReady: true, weapon: Weapon.sword}
+        {isReady: true, weapon: Weapon.arrow}
       ]
 
   it 'should perform token move if it is a possible action', ->

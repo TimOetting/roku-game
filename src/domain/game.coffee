@@ -3,7 +3,7 @@ Position = require('./position')
 module.exports = class Game
   constructor: (@board, player1, player2) ->
     @players = [
-      player1,
+      player1
       player2
     ]
     @createdAt = new Date

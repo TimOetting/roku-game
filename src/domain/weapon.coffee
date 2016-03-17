@@ -1,5 +1,5 @@
-module.exports = Object.freeze({
-    shield: 0
-    sword: 1
-    arrow: 2
-    })
+module.exports = Object.freeze
+  none:   0
+  shield: 1
+  sword:  2
+  arrow:  3

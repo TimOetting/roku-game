@@ -1,4 +1,4 @@
-GameToken = require('./gametoken')
+GameToken = require './gametoken'
 
 module.exports = class Player
   constructor: (@id) ->

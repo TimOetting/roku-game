@@ -1,2 +1,3 @@
-module.exports = class Position
-  constructor: (@x, @y) ->
+module.exports = 
+  class Position
+    constructor: (@x, @y) ->
