@@ -8,7 +8,7 @@ module.exports = class GameToken
         {isReady: true, weapon: Weapon.shield}
         {isReady: true, weapon: Weapon.sword}
         {isReady: true, weapon: Weapon.arrow}
-        {isReady: true, weapon: null}
+        {isReady: true, weapon: Weapon.none}
         {isReady: true, weapon: Weapon.sword}
         {isReady: true, weapon: Weapon.arrow}
       ]
