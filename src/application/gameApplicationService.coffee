@@ -31,6 +31,7 @@ module.exports = class GameApplicationService
     @_performAction(game) 
     lastAction = 
       type: 'rotate'
+      tokenId: tokenId
       steps: steps
     game.lastAction = lastAction
     game
@@ -63,7 +64,7 @@ module.exports = class GameApplicationService
       @_performAction(game)
       lastAction = 
         type: 'attack'
-        attackerId: attackerTokenId
+        tokenId: attackerTokenId
         targetId: targetTokenId
     game.lastAction = lastAction
     game
