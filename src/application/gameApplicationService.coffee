@@ -26,23 +26,34 @@ module.exports = class GameApplicationService
   rotate: (game, tokenId, steps) ->
     token = game.board.gameTokens[tokenId]
     for i in [0...Math.abs(steps)]
-      console.log 'ding ', steps
       token.sides.unshift(token.sides.pop()) if steps > 0
       token.sides.push(token.sides.shift()) if steps < 0
     @_performAction(game) 
-    return game
+    lastAction = 
+      type: 'rotate'
+      steps: steps
+    game.lastAction = lastAction
+    game
 
   move: (game, tokenId, position) ->
     token = game.board.gameTokens[tokenId]
+    lastAction = {}  
     if @_containsPosition token.possibleActions.moves, position
+      lastAction = 
+        type: 'move'
+        tokenId: tokenId
+        srcPos: token.position
+        destPos: position
       token.position = position
       @_performAction(game)
-    return game
+    game.lastAction = lastAction
+    game
 
   attack: (game, attackerTokenId, targetTokenId) ->
     attacker = game.board.gameTokens[attackerTokenId]
     target = game.board.gameTokens[targetTokenId]
     attack = @_getPossibleAttack attacker, target
+    lastAction = {}
     if attack?
       target = game.board.gameTokens[attack.targetId]
       target.health-- 
@@ -50,6 +61,11 @@ module.exports = class GameApplicationService
         target.isAlive = false
       attacker.sides[attack.side].isReady = false
       @_performAction(game)
+      lastAction = 
+        type: 'attack'
+        attackerId: attackerTokenId
+        targetId: targetTokenId
+    game.lastAction = lastAction
     game
 
   _performAction: (game) ->

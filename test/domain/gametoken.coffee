@@ -9,12 +9,12 @@ describe '#gameToken', ->
     gameToken.playerId.should.equal 42
     gameToken.health.should.equal 10
     gameToken.sides.length.should.equal 6
-
     gameToken.sides[0].weapon.should.equal Weapon.shield
     gameToken.sides[1].weapon.should.equal Weapon.sword
     gameToken.sides[2].weapon.should.equal Weapon.arrow
     # gameToken.sides[3].weapon.should.equal null
-    (gameToken.sides[3].weapon == null).should.be.true
+    # (gameToken.sides[3].weapon == null).should.be.true
+    gameToken.sides[3].weapon.should.equal Weapon.none
     gameToken.sides[4].weapon.should.equal Weapon.sword
     gameToken.sides[5].weapon.should.equal Weapon.arrow
 
